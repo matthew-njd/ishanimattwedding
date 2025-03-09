@@ -3,7 +3,7 @@ import { SupabaseService } from '../_services/supabase.service';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -38,7 +38,10 @@ export class SearchNameComponent implements OnInit {
       map(value => this._filter(value || ''))
     );
 
-    this.searchControl.valueChanges.subscribe(value => {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(value => {
       this.selectedName.emit(value || '');
     });
   }
