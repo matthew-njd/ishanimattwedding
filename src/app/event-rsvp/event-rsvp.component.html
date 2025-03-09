@@ -1,0 +1,136 @@
+<div *ngIf="selectedInvitee">
+    <h2>Hello, {{selectedInvitee.Name}}!</h2>
+    <p>Please RSVP for the events you've been invited to:</p>
+    
+    <!-- Mehndi Event Form -->
+    <div *ngIf="selectedInvitee.IsInvitedMehndi" class="event-form">
+      <h3>Mehndi</h3>
+      <p>Thursday, June 5th, 2025 | 6:00 PM - 10:00 PM</p>
+      <p>Location: Sheraton Grand, Bangalore</p>
+      
+      <form [formGroup]="mehndiForm">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Will you attend?</mat-label>
+          <mat-select formControlName="attending" required>
+            <mat-option [value]="true">Yes, I will attend</mat-option>
+            <mat-option [value]="false">No, I cannot attend</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="mehndiForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Number of Guests (including yourself)</mat-label>
+          <input matInput type="number" formControlName="numberOfGuests" min="1" max="10">
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="mehndiForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Dietary Restrictions</mat-label>
+          <textarea matInput formControlName="dietaryRestrictions" placeholder="Vegetarian, vegan, allergies, etc."></textarea>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="mehndiForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Additional Notes</mat-label>
+          <textarea matInput formControlName="additionalNotes"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+    
+    <!-- Grah Shanti Event Form -->
+    <div *ngIf="selectedInvitee.IsInvitedGrahShanti" class="event-form">
+      <h3>Grah Shanti</h3>
+      <p>Friday, June 6th, 2025 | 10:00 AM - 2:00 PM</p>
+      <p>Location: Taj West End, Bangalore</p>
+      
+      <form [formGroup]="grahShantiForm">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Will you attend?</mat-label>
+          <mat-select formControlName="attending" required>
+            <mat-option [value]="true">Yes, I will attend</mat-option>
+            <mat-option [value]="false">No, I cannot attend</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="grahShantiForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Number of Guests (including yourself)</mat-label>
+          <input matInput type="number" formControlName="numberOfGuests" min="1" max="10">
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="grahShantiForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Dietary Restrictions</mat-label>
+          <textarea matInput formControlName="dietaryRestrictions" placeholder="Vegetarian, vegan, allergies, etc."></textarea>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="grahShantiForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Additional Notes</mat-label>
+          <textarea matInput formControlName="additionalNotes"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+    
+    <!-- Wedding Ceremony Form -->
+    <div *ngIf="selectedInvitee.IsInvitedCeremony" class="event-form">
+      <h3>Wedding Ceremony</h3>
+      <p>Saturday, June 7th, 2025 | 9:00 AM - 1:00 PM</p>
+      <p>Location: ITC Gardenia, Bangalore</p>
+      
+      <form [formGroup]="ceremonyForm">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Will you attend?</mat-label>
+          <mat-select formControlName="attending" required>
+            <mat-option [value]="true">Yes, I will attend</mat-option>
+            <mat-option [value]="false">No, I cannot attend</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="ceremonyForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Number of Guests (including yourself)</mat-label>
+          <input matInput type="number" formControlName="numberOfGuests" min="1" max="10">
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="ceremonyForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Dietary Restrictions</mat-label>
+          <textarea matInput formControlName="dietaryRestrictions" placeholder="Vegetarian, vegan, allergies, etc."></textarea>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="ceremonyForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Additional Notes</mat-label>
+          <textarea matInput formControlName="additionalNotes"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+    
+    <!-- Reception Form -->
+    <div *ngIf="selectedInvitee.IsInvitedReception" class="event-form">
+      <h3>Reception</h3>
+      <p>Saturday, June 7th, 2025 | 7:00 PM - 11:00 PM</p>
+      <p>Location: ITC Gardenia, Bangalore</p>
+      
+      <form [formGroup]="receptionForm">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Will you attend?</mat-label>
+          <mat-select formControlName="attending" required>
+            <mat-option [value]="true">Yes, I will attend</mat-option>
+            <mat-option [value]="false">No, I cannot attend</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="receptionForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Number of Guests (including yourself)</mat-label>
+          <input matInput type="number" formControlName="numberOfGuests" min="1" max="10">
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="receptionForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Dietary Restrictions</mat-label>
+          <textarea matInput formControlName="dietaryRestrictions" placeholder="Vegetarian, vegan, allergies, etc."></textarea>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="receptionForm.get('attending')?.value === true" appearance="fill" class="form-field">
+          <mat-label>Additional Notes</mat-label>
+          <textarea matInput formControlName="additionalNotes"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+  
+  <div *ngIf="!selectedInvitee" class="no-invitee">
+    <p>Please select your name from the previous step.</p>
+  </div>
