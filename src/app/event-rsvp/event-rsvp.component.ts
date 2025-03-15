@@ -66,8 +66,8 @@ export class EventRsvpComponent implements OnChanges {
     return this.fb.group({
       attending: ['', Validators.required],
       numberOfGuests: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
-      dietaryRestrictions: [''],
-      additionalNotes: ['']
+      guestsNames: ['', Validators.required],
+      dietaryRestrictions: ['']
     });
   }
 

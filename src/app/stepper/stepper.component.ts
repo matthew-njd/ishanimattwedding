@@ -33,7 +33,6 @@ export class StepperComponent {
     firstCtrl: ['', Validators.required],
   });
 
-  isLinear = true;
   selectedInvitee: Invitee | null = null;
   isSubmitting = false;
 

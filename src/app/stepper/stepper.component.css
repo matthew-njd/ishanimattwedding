@@ -5,3 +5,33 @@
 .mat-mdc-form-field {
     margin-top: 16px;
 }
+
+/* Custom styles for the active stepper icon */
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #255b42; /* Using the off-green color from your theme */
+    color: white;
+}
+
+/* Optional: Style for completed steps */
+::ng-deep .mat-step-header .mat-step-icon-state-done {
+    background-color: #c69971; /* Using the off-brown color from your theme */
+    color: white;
+}
+
+/* Style for the stepper when a step is being edited */
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+    background-color: #e8eae9; /* Using the off-white color from your theme */
+    border: 2px solid #255b42; /* Green border to indicate edit mode */
+    color: #255b42; /* Green text for contrast */
+}
+
+/* Additional styling for the step label when in edit mode */
+::ng-deep .mat-step-header.mat-step-header-edit .mat-step-label {
+    font-style: italic;
+    color: #255b42;
+}
+
+/* Optional: Add a subtle indicator for steps in edit mode */
+::ng-deep .mat-step-header:focus .mat-step-icon {
+    box-shadow: 0 0 0 3px rgba(37, 91, 66, 0.3); /* Subtle green glow */
+}
