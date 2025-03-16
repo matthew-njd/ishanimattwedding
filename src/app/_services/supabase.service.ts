@@ -45,4 +45,45 @@ export class SupabaseService {
     ])
     if (error) throw error;
   }
+
+  async insertGrahShantiRsvp(inviteeId: number, isAttending: boolean, numberOfGuests: number, guestsNames: string) {
+    const { data, error } = await this.supabase.from('GrahShantiRsvps')
+    .insert([
+      { 
+        WeddingInviteeId: inviteeId, 
+        IsAttending: isAttending,
+        NumberGuests: numberOfGuests,
+        GuestsNames: guestsNames
+      },
+    ])
+    if (error) throw error;
+  }
+
+  async insertCeremonyRsvp(inviteeId: number, isAttending: boolean, numberOfGuests: number, guestsNames: string, dietaryRestrictions: string) {
+    const { data, error } = await this.supabase.from('CeremonyRsvps')
+    .insert([
+      { 
+        WeddingInviteeId: inviteeId, 
+        IsAttending: isAttending,
+        NumberGuests: numberOfGuests,
+        GuestsNames: guestsNames,
+        DietaryRestrictions: dietaryRestrictions
+      },
+    ])
+    if (error) throw error;
+  }
+
+  async insertReceptionRsvp(inviteeId: number, isAttending: boolean, numberOfGuests: number, guestsNames: string, dietaryRestrictions: string) {
+    const { data, error } = await this.supabase.from('ReceptionRsvps')
+    .insert([
+      { 
+        WeddingInviteeId: inviteeId, 
+        IsAttending: isAttending,
+        NumberGuests: numberOfGuests,
+        GuestsNames: guestsNames,
+        DietaryRestrictions: dietaryRestrictions
+      },
+    ])
+    if (error) throw error;
+  }
 }

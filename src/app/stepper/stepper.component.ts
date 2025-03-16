@@ -85,9 +85,19 @@ export class StepperComponent {
     // Here you would send the data to your backend
     console.log('Submitting RSVP data:', formData);
 
-    // if (this.selectedInvitee?.Id) {
-    //   this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.isAttending, formData.mehndi.numberOfGuests, formData.mehndi.guestsNames);
-    // }
+    if (this.selectedInvitee?.Id) {
+      this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.attending, formData.mehndi.numberOfGuests, 
+        formData.mehndi.guestsNames);
+
+      this.supabaseService.insertGrahShantiRsvp(this.selectedInvitee.Id, formData.grahShanti.attending, formData.grahShanti.numberOfGuests, 
+        formData.grahShanti.guestsNames);
+      
+      this.supabaseService.insertCeremonyRsvp(this.selectedInvitee.Id, formData.ceremony.attending, formData.ceremony.numberOfGuests, 
+        formData.ceremony.guestsNames, formData.ceremony.dietaryRestrictions);
+      
+      this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, 
+        formData.reception.guestsNames, formData.reception.dietaryRestrictions);
+    }
     
     // Simulate API call
     setTimeout(() => {
