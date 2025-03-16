@@ -33,10 +33,10 @@ export class EventRsvpComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     // Initialize all forms
-    this.mehndiForm = this.createEventForm();
-    this.grahShantiForm = this.createEventForm();
-    this.ceremonyForm = this.createEventForm();
-    this.receptionForm = this.createEventForm();
+    this.mehndiForm = this.createEventForm(false);
+    this.grahShantiForm = this.createEventForm(false);
+    this.ceremonyForm = this.createEventForm(true);
+    this.receptionForm = this.createEventForm(true);
   }
 
   // Track which forms are valid
@@ -62,13 +62,18 @@ export class EventRsvpComponent implements OnChanges {
     return valid;
   }
 
-  createEventForm(): FormGroup {
-    return this.fb.group({
+  createEventForm(includeDietaryRestrictions: boolean = false): FormGroup {
+    const formControls: any = {
       attending: ['', Validators.required],
       numberOfGuests: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
       guestsNames: ['', Validators.required],
-      dietaryRestrictions: ['']
-    });
+    };
+    
+    if (includeDietaryRestrictions) {
+      formControls.dietaryRestrictions = [''];
+    }
+    
+    return this.fb.group(formControls);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -79,15 +84,16 @@ export class EventRsvpComponent implements OnChanges {
   }
   
   resetForms(): void {
-    this.mehndiForm.reset({ attending: '', numberOfGuests: 1 });
-    this.grahShantiForm.reset({ attending: '', numberOfGuests: 1 });
-    this.ceremonyForm.reset({ attending: '', numberOfGuests: 1 });
-    this.receptionForm.reset({ attending: '', numberOfGuests: 1 });
+    this.mehndiForm.reset({ attending: '', numberOfGuests: 1, guestsNames: '' });
+    this.grahShantiForm.reset({ attending: '', numberOfGuests: 1, guestsNames: '' });
+    this.ceremonyForm.reset({ attending: '', numberOfGuests: 1, guestsNames: '', dietaryRestrictions: '' });
+    this.receptionForm.reset({ attending: '', numberOfGuests: 1, guestsNames: '', dietaryRestrictions: '' });
   }
   
   // Get all form values for submission
   getFormValues() {
     return {
+      id: this.selectedInvitee?.Id,
       name: this.selectedInvitee?.Name,
       mehndi: this.selectedInvitee?.IsInvitedMehndi ? this.mehndiForm.value : null,
       grahShanti: this.selectedInvitee?.IsInvitedGrahShanti ? this.grahShantiForm.value : null,

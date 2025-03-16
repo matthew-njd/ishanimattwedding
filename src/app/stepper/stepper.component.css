@@ -6,6 +6,7 @@
     margin-top: 16px;
 }
 
+
 /* Custom styles for the active stepper icon */
 ::ng-deep .mat-step-header .mat-step-icon-selected {
     background-color: #255b42; /* Using the off-green color from your theme */

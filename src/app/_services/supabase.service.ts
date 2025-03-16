@@ -32,4 +32,17 @@ export class SupabaseService {
     if (error) throw error;
     return data;
   }
+
+  async insertMendhiRsvp(inviteeId: number, isAttending: boolean, numberOfGuests: number, guestsNames: string) {
+    const { data, error } = await this.supabase.from('MehndiRsvps')
+    .insert([
+      { 
+        WeddingInviteeId: inviteeId, 
+        IsAttending: isAttending,
+        NumberGuests: numberOfGuests,
+        GuestsNames: guestsNames
+      },
+    ])
+    if (error) throw error;
+  }
 }
