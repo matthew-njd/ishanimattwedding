@@ -1,12 +1,12 @@
-<div *ngIf="selectedInvitee">
+<div *ngIf="selectedInvitee" class="event-container">
     <h2 class="text-lg">Hello, {{selectedInvitee.Name}}!</h2>
     <p class="mt-4">Please RSVP to the following events:</p>
     
-    <!-- Mehndi Event Form -->
-    <div *ngIf="selectedInvitee.IsInvitedMehndi" class="event-form">
-      <h3 class="font-medium mt-4 text-lg text-off-brown underline">Mehndi</h3>
-      <p class="text-sm">Wednesday, August 27th, 2025 | Starts at 5:00 PM</p>
-      <p class="text-sm">Location: 3 Cyprus Glen, East Gwillimbury, ON</p>
+    <!-- Mehndi Form -->
+    <div *ngIf="selectedInvitee.IsInvitedMehndi" class="event-form bg-gray-50 p-3 rounded-md my-4">
+      <h3 class="font-medium mt-2 text-lg text-off-brown underline">Mehndi</h3>
+      <p class="text-sm md:text-base">Wednesday, August 27th, 2025 | Starts at 5:00 PM</p>
+      <p class="text-sm md:text-base mb-3">Location: 3 Cyprus Glen, East Gwillimbury, ON</p>
       
       <form [formGroup]="mehndiForm">
         <mat-form-field appearance="fill" class="w-full">
@@ -29,11 +29,11 @@
       </form>
     </div>
     
-    <!-- Grah Shanti Event Form -->
-    <div *ngIf="selectedInvitee.IsInvitedGrahShanti" class="event-form">
-      <h3 class="font-medium mt-4 text-lg text-off-brown underline">Pithi</h3>
-      <p class="text-sm">Thursday, August 28th, 2025 | Starts at 4:00 PM</p>
-      <p class="text-sm">Location: 3 Cyprus Glen, East Gwillimbury, ON</p>
+    <!-- Grah Shanti Form -->
+    <div *ngIf="selectedInvitee.IsInvitedGrahShanti" class="event-form bg-gray-50 p-3 rounded-md my-4">
+      <h3 class="font-medium mt-2 text-lg text-off-brown underline">Pithi</h3>
+      <p class="text-sm md:text-base">Thursday, August 28th, 2025 | Starts at 4:00 PM</p>
+      <p class="text-sm md:text-base mb-3">Location: 3 Cyprus Glen, East Gwillimbury, ON</p>
       
       <form [formGroup]="grahShantiForm">
         <mat-form-field appearance="fill" class="w-full">
@@ -56,11 +56,11 @@
       </form>
     </div>
     
-    <!-- Wedding Ceremony Form -->
-    <div *ngIf="selectedInvitee.IsInvitedCeremony" class="event-form">
-      <h3 class="font-medium mt-4 text-lg text-off-brown underline">Wedding Ceremony</h3>
-      <p class="text-sm">Friday, August 29th, 2025 | Starts at 9:30 AM</p>
-      <p class="text-sm">Location: BAPS Shri Swaminarayan Mandir - 61 Claireville Dr, Toronto</p>
+    <!-- Ceremony Form -->
+    <div *ngIf="selectedInvitee.IsInvitedCeremony" class="event-form bg-gray-50 p-3 rounded-md my-4">
+      <h3 class="font-medium mt-2 text-lg text-off-brown underline">Wedding Ceremony</h3>
+      <p class="text-sm md:text-base">Friday, August 29th, 2025 | Starts at 9:30 AM</p>
+      <p class="text-sm md:text-base mb-3">Location: BAPS Shri Swaminarayan Mandir - 61 Claireville Dr, Toronto</p>
       
       <form [formGroup]="ceremonyForm">
         <mat-form-field appearance="fill" class="w-full">
@@ -89,10 +89,10 @@
     </div>
     
     <!-- Reception Form -->
-    <div *ngIf="selectedInvitee.IsInvitedReception" class="event-form">
-      <h3 class="font-medium mt-4 text-lg text-off-brown underline">Reception</h3>
-      <p class="text-sm">Friday, August 29th, 2025 | Starts at 6:00 PM</p>
-      <p class="text-sm">Location: The Eglinton Grand - 400 Eglinton Ave W, Toronto</p>
+    <div *ngIf="selectedInvitee.IsInvitedReception" class="event-form bg-gray-50 p-3 rounded-md my-4">
+      <h3 class="font-medium mt-2 text-lg text-off-brown underline">Reception</h3>
+      <p class="text-sm md:text-base">Friday, August 29th, 2025 | Starts at 6:00 PM</p>
+      <p class="text-sm md:text-base mb-3">Location: The Eglinton Grand - 400 Eglinton Ave W, Toronto</p>
       
       <form [formGroup]="receptionForm">
         <mat-form-field appearance="fill" class="w-full">
@@ -121,6 +121,6 @@
     </div>
   </div>
   
-  <div *ngIf="!selectedInvitee" class="no-invitee">
+  <div *ngIf="!selectedInvitee" class="no-invitee p-4 text-center">
     <p>Please select your name from the previous step.</p>
   </div>

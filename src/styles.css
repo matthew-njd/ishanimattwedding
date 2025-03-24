@@ -15,5 +15,34 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@media screen and (max-width: 768px) {
+    .mat-form-field {
+        width: 100%;
+    }
+    
+    .mat-step-header {
+        padding: 16px 12px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .mat-stepper-vertical {
+        margin-top: 1rem;
+    }
+    
+    .event-form {
+        padding: 0.5rem;
+    }
+    
+    .mat-form-field {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    button.mat-button {
+        min-width: auto;
+        padding: 0 8px;
+        margin: 0 4px;
+    }
+}

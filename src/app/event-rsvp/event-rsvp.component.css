@@ -1,0 +1,42 @@
+.event-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 8px;
+}
+
+.event-form {
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.no-invitee {
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .event-form {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-form {
+    padding: 8px;
+  }
+  
+  h3 {
+    font-size: 1.1rem;
+  }
+  
+  p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .mat-form-field {
+    margin-bottom: 0.5rem;
+  }
+}

@@ -3,7 +3,7 @@
         <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Select your Name</ng-template>
         <app-search-name class="input-field" (selectedName)="onNameSelected($event)"></app-search-name>
-        <div>
+        <div class="flex justify-end mt-4">
             <button mat-button matStepperNext>Next</button>
         </div>
         </form>
@@ -11,7 +11,7 @@
 
     <mat-step label="RSVP to Events">
         <app-event-rsvp [selectedInvitee]="selectedInvitee"></app-event-rsvp>
-        <div class="step-actions">
+        <div class="step-actions flex flex-wrap justify-between mt-4 gap-2">
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>
         </div>
@@ -20,8 +20,8 @@
     <mat-step>
         <ng-template matStepLabel>Submit</ng-template>
         <p class="mt-2 mb-2">Thank you for your RSVP. We can't wait to celebrate with you!</p>
-        <div class="flex justify-between w-full">
-            <div>
+        <div class="flex flex-wrap justify-between w-full mt-4 gap-2">
+            <div class="flex gap-2">
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Reset</button>
             </div>

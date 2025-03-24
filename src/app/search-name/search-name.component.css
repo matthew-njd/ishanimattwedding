@@ -1,0 +1,17 @@
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-autocomplete-panel {
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  .mat-form-field {
+    font-size: 14px;
+  }
+  
+  ::ng-deep .mat-autocomplete-panel {
+    max-width: 90vw !important;
+  }
+}
