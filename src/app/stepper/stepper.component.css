@@ -11,7 +11,6 @@
     color: white;
 }
 
-/* Optional: Style for completed steps */
 ::ng-deep .mat-step-header .mat-step-icon-state-done {
     background-color: #c69971;
     color: white;
@@ -65,4 +64,34 @@
     ::ng-deep .mat-vertical-content {
         padding: 0 8px 16px 8px !important;
     }
+}
+
+/* Add rounded corners to the stepper */
+::ng-deep .mat-stepper-vertical {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+::ng-deep .mat-vertical-stepper-content {
+    overflow: hidden;
+}
+
+::ng-deep .mat-vertical-content-container {
+    border-radius: 0 0 8px 8px;
+}
+
+::ng-deep .mat-step-header {
+    border-radius: 8px;
+}
+
+::ng-deep .mat-step-header:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+::ng-deep .mat-step-header:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+::ng-deep .mat-vertical-content {
+    border-radius: 0 0 8px 8px;
 }
