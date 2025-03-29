@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -35,14 +35,19 @@ export class StepperComponent {
 
   selectedInvitee: Invitee | null = null;
   isSubmitting = false;
-  isValid = false;
+  isFormsValid = false;
 
   @ViewChild(SearchNameComponent) searchNameComponent!: SearchNameComponent;
   @ViewChild(EventRsvpComponent) eventRsvpComponent!: EventRsvpComponent;
-  
+
   ngAfterViewInit() {
     // Connect the search component's control to the stepper's form
     this.firstFormGroup.setControl('firstCtrl', this.searchNameComponent.searchControl);
+  }
+
+  // Handle form validity changes from the event component
+  onFormValidityChange(isValid: boolean): void {
+    this.isFormsValid = isValid;
   }
   
   async onNameSelected(name: string) {
@@ -85,19 +90,19 @@ export class StepperComponent {
     
     console.log('Submitting RSVP data:', formData);
 
-    if (this.selectedInvitee?.Id) {
-      this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.attending, formData.mehndi.numberOfGuests, 
-        formData.mehndi.guestsNames);
+    // if (this.selectedInvitee?.Id) {
+    //   this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.attending, formData.mehndi.numberOfGuests, 
+    //     formData.mehndi.guestsNames);
 
-      this.supabaseService.insertGrahShantiRsvp(this.selectedInvitee.Id, formData.grahShanti.attending, formData.grahShanti.numberOfGuests, 
-        formData.grahShanti.guestsNames);
+    //   this.supabaseService.insertGrahShantiRsvp(this.selectedInvitee.Id, formData.grahShanti.attending, formData.grahShanti.numberOfGuests, 
+    //     formData.grahShanti.guestsNames);
       
-      this.supabaseService.insertCeremonyRsvp(this.selectedInvitee.Id, formData.ceremony.attending, formData.ceremony.numberOfGuests, 
-        formData.ceremony.guestsNames, formData.ceremony.dietaryRestrictions);
+    //   this.supabaseService.insertCeremonyRsvp(this.selectedInvitee.Id, formData.ceremony.attending, formData.ceremony.numberOfGuests, 
+    //     formData.ceremony.guestsNames, formData.ceremony.dietaryRestrictions);
       
-      this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, 
-        formData.reception.guestsNames, formData.reception.dietaryRestrictions);
-    }
+    //   this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, 
+    //     formData.reception.guestsNames, formData.reception.dietaryRestrictions);
+    // }
     
     // Simulate API call
     setTimeout(() => {

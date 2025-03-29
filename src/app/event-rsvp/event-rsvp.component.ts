@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,11 +25,19 @@ import { Invitee } from '../_models/types';
 })
 export class EventRsvpComponent implements OnChanges {
   @Input() selectedInvitee: Invitee | null = null;
+  @Output() formValidityChange = new EventEmitter<boolean>();
 
   mehndiForm: FormGroup;
   grahShantiForm: FormGroup;
   ceremonyForm: FormGroup;
   receptionForm: FormGroup;
+
+  private _formsValid = false;
+
+  // Get the forms valid state
+  get formsValid(): boolean {
+    return this._formsValid;
+  }
 
   constructor(private fb: FormBuilder) {
     // Initialize all forms
@@ -37,43 +45,80 @@ export class EventRsvpComponent implements OnChanges {
     this.grahShantiForm = this.createEventForm(false);
     this.ceremonyForm = this.createEventForm(true);
     this.receptionForm = this.createEventForm(true);
+    
+    // Subscribe to form value changes to update validity
+    this.mehndiForm.statusChanges.subscribe(() => this.checkFormValidity());
+    this.grahShantiForm.statusChanges.subscribe(() => this.checkFormValidity());
+    this.ceremonyForm.statusChanges.subscribe(() => this.checkFormValidity());
+    this.receptionForm.statusChanges.subscribe(() => this.checkFormValidity());
   }
 
-  // Track which forms are valid
-  get formsValid(): boolean {
-    let valid = true;
-    
-    if (this.selectedInvitee?.IsInvitedMehndi && this.mehndiForm) {
-      valid = valid && this.mehndiForm.valid;
+  // Check all form validity and emit changes
+  private checkFormValidity(): void {
+    let valid: boolean = true;
+  
+    if (this.selectedInvitee?.IsInvitedMehndi) {
+      const attendingValue = this.mehndiForm.get('attending')?.value;
+      valid = valid && (this.mehndiForm.valid || 
+        (attendingValue === false && this.mehndiForm.get('attending')?.valid === true));
     }
     
-    if (this.selectedInvitee?.IsInvitedGrahShanti && this.grahShantiForm) {
-      valid = valid && this.grahShantiForm.valid;
+    if (this.selectedInvitee?.IsInvitedGrahShanti) {
+      const attendingValue = this.grahShantiForm.get('attending')?.value;
+      valid = valid && (this.grahShantiForm.valid || 
+        (attendingValue === false && this.grahShantiForm.get('attending')?.valid === true));
     }
     
-    if (this.selectedInvitee?.IsInvitedCeremony && this.ceremonyForm) {
-      valid = valid && this.ceremonyForm.valid;
+    if (this.selectedInvitee?.IsInvitedCeremony) {
+      const attendingValue = this.ceremonyForm.get('attending')?.value;
+      valid = valid && (this.ceremonyForm.valid || 
+        (attendingValue === false && this.ceremonyForm.get('attending')?.valid === true));
     }
     
-    if (this.selectedInvitee?.IsInvitedReception && this.receptionForm) {
-      valid = valid && this.receptionForm.valid;
+    if (this.selectedInvitee?.IsInvitedReception) {
+      const attendingValue = this.receptionForm.get('attending')?.value;
+      valid = valid && (this.receptionForm.valid || 
+        (attendingValue === false && this.receptionForm.get('attending')?.valid === true));
     }
     
-    return valid;
+    if (this._formsValid !== valid) {
+      this._formsValid = valid;
+      this.formValidityChange.emit(valid);
+    }
   }
+
 
   createEventForm(includeDietaryRestrictions: boolean = false): FormGroup {
     const formControls: any = {
       attending: ['', Validators.required],
-      numberOfGuests: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
-      guestsNames: ['', Validators.required],
+      numberOfGuests: [1, []],
+      guestsNames: ['', []],
     };
     
     if (includeDietaryRestrictions) {
       formControls.dietaryRestrictions = [''];
     }
+
+    const form = this.fb.group(formControls);
+  
+    // Add conditional validation based on attendance
+    form.get('attending')?.valueChanges.subscribe(isAttending => {
+      if (isAttending === true) {
+        // If attending, these fields are required
+        form.get('numberOfGuests')?.setValidators([Validators.required, Validators.min(1), Validators.max(10)]);
+        form.get('guestsNames')?.setValidators([Validators.required]);
+      } else {
+        // If not attending, these fields are optional
+        form.get('numberOfGuests')?.clearValidators();
+        form.get('guestsNames')?.clearValidators();
+      }
+      
+      // Update validation status
+      form.get('numberOfGuests')?.updateValueAndValidity();
+      form.get('guestsNames')?.updateValueAndValidity();
+    });
     
-    return this.fb.group(formControls);
+    return form;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -92,13 +137,42 @@ export class EventRsvpComponent implements OnChanges {
   
   // Get all form values for submission
   getFormValues() {
+    const sanitizeForm = (form: any, isAttending: boolean) => {
+      if (!isAttending) {
+        // When not attending, ensure consistent values
+        return {
+          attending: false,
+          numberOfGuests: 0,
+          guestsNames: '',
+          dietaryRestrictions: ''
+        };
+      }
+      return form;
+    };
+  
+    const mehndiData = this.selectedInvitee?.IsInvitedMehndi 
+      ? sanitizeForm(this.mehndiForm.value, this.mehndiForm.value.attending) 
+      : null;
+      
+    const grahShantiData = this.selectedInvitee?.IsInvitedGrahShanti 
+      ? sanitizeForm(this.grahShantiForm.value, this.grahShantiForm.value.attending) 
+      : null;
+      
+    const ceremonyData = this.selectedInvitee?.IsInvitedCeremony 
+      ? sanitizeForm(this.ceremonyForm.value, this.ceremonyForm.value.attending) 
+      : null;
+      
+    const receptionData = this.selectedInvitee?.IsInvitedReception 
+      ? sanitizeForm(this.receptionForm.value, this.receptionForm.value.attending) 
+      : null;
+  
     return {
       id: this.selectedInvitee?.Id,
       name: this.selectedInvitee?.Name,
-      mehndi: this.selectedInvitee?.IsInvitedMehndi ? this.mehndiForm.value : null,
-      grahShanti: this.selectedInvitee?.IsInvitedGrahShanti ? this.grahShantiForm.value : null,
-      ceremony: this.selectedInvitee?.IsInvitedCeremony ? this.ceremonyForm.value : null,
-      reception: this.selectedInvitee?.IsInvitedReception ? this.receptionForm.value : null
+      mehndi: mehndiData,
+      grahShanti: grahShantiData,
+      ceremony: ceremonyData,
+      reception: receptionData
     };
   }
 }

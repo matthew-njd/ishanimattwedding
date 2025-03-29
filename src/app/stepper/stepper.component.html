@@ -10,13 +10,14 @@
     </mat-step>
 
     <mat-step label="RSVP to Events">
-        <app-event-rsvp [selectedInvitee]="selectedInvitee"></app-event-rsvp>
+        <app-event-rsvp [selectedInvitee]="selectedInvitee" (formValidityChange)="onFormValidityChange($event)">
+    </app-event-rsvp>
         <div class="step-actions flex flex-wrap justify-between mt-4 gap-2">
             <div class="flex gap-2">
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Reset</button>
             </div>
-            <button mat-button matStepperNext (click)="onSubmit()">Submit</button>
+            <button mat-button matStepperNext [disabled]="!isFormsValid" (click)="onSubmit()">Submit</button>
         </div>
     </mat-step>
 
