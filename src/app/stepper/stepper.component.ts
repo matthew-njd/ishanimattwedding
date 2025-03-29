@@ -35,6 +35,7 @@ export class StepperComponent {
 
   selectedInvitee: Invitee | null = null;
   isSubmitting = false;
+  isValid = false;
 
   @ViewChild(SearchNameComponent) searchNameComponent!: SearchNameComponent;
   @ViewChild(EventRsvpComponent) eventRsvpComponent!: EventRsvpComponent;
@@ -82,7 +83,6 @@ export class StepperComponent {
     this.isSubmitting = true;
     const formData = this.eventRsvpComponent.getFormValues();
     
-    // Here you would send the data to your backend
     console.log('Submitting RSVP data:', formData);
 
     if (this.selectedInvitee?.Id) {
@@ -102,7 +102,7 @@ export class StepperComponent {
     // Simulate API call
     setTimeout(() => {
       this.isSubmitting = false;
-      // Handle success - perhaps navigate to a thank you page
+      // Handle success
     }, 1000);
   }
 }

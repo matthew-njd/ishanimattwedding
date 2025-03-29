@@ -4,6 +4,8 @@
     --color-off-green: #255b42;
     --color-off-brown: #c69971;
     --color-off-white: #e8eae9;
+
+    --font-cursive: "Italianno", "cursive";
 }
 
 html, body { 
