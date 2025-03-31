@@ -17,21 +17,7 @@ body {
     font-family: "Italianno", cursive;
     font-weight: 400;
     font-style: normal;
-}
-
-body::before {
-    content: "";
-    background-image: url('/engagment1.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
-    z-index: -1;
+    background-image: url('/bloom.png');
 }
 
 @media screen and (max-width: 768px) {
