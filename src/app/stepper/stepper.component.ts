@@ -36,6 +36,7 @@ export class StepperComponent {
   selectedInvitee: Invitee | null = null;
   isSubmitting = false;
   isFormsValid = false;
+  rsvpMehndiDate: string = '';
 
   @ViewChild(SearchNameComponent) searchNameComponent!: SearchNameComponent;
   @ViewChild(EventRsvpComponent) eventRsvpComponent!: EventRsvpComponent;
@@ -57,6 +58,12 @@ export class StepperComponent {
       try {
         // Get which events the invitee is invited to
         const inviteeEvents = await this.supabaseService.getInvitedEvents(name);
+
+        const inviteeId = inviteeEvents[0].Id
+        const alreadyRsvpMehndi = await this.supabaseService.getAlreadyMendhRsvp(inviteeId);
+        const date = new Date(alreadyRsvpMehndi[0].Created);
+        this.rsvpMehndiDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        console.log(this.rsvpMehndiDate);
         
         if (inviteeEvents && inviteeEvents.length > 0) {
           // We're assuming there's only one entry per name

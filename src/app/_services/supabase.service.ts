@@ -20,7 +20,7 @@ export class SupabaseService {
   }
 
   async getNames() {
-    const { data, error } = await this.supabase.from('WeddingInvitees').select('Name');
+    const { data, error } = await this.supabase.from('WeddingInvitees').select('Id, Name');
     if (error) throw error;
     return data;
   }
@@ -29,6 +29,14 @@ export class SupabaseService {
     const { data, error } = await this.supabase.from('WeddingInvitees')
       .select('Id, Name, IsInvitedMehndi, IsInvitedGrahShanti, IsInvitedCeremony, IsInvitedReception')
       .eq('Name', name);
+    if (error) throw error;
+    return data;
+  }
+
+  async getAlreadyMendhRsvp(id: number) {
+    const {data, error} = await this.supabase.from('MehndiRsvps')
+      .select('IsAttending, Created')
+      .eq('WeddingInviteeId', id);
     if (error) throw error;
     return data;
   }
