@@ -33,10 +33,42 @@ export class SupabaseService {
     return data;
   }
 
-  async getAlreadyMendhRsvp(id: number) {
+  async getAlreadyMendhiRsvp(id: number) {
     const {data, error} = await this.supabase.from('MehndiRsvps')
       .select('IsAttending, Created')
-      .eq('WeddingInviteeId', id);
+      .eq('WeddingInviteeId', id)
+      .order('Created', { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return data;
+  }
+
+  async getAlreadyGrahShantiRsvp(id: number) {
+    const {data, error} = await this.supabase.from('GrahShantiRsvps')
+      .select('IsAttending, Created')
+      .eq('WeddingInviteeId', id)
+      .order('Created', { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return data;
+  }
+
+  async getAlreadyCeremonyRsvp(id: number) {
+    const {data, error} = await this.supabase.from('CeremonyRsvps')
+      .select('IsAttending, Created')
+      .eq('WeddingInviteeId', id)
+      .order('Created', { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return data;
+  }
+
+  async getAlreadyReceptionRsvp(id: number) {
+    const {data, error} = await this.supabase.from('ReceptionRsvps')
+      .select('IsAttending, Created')
+      .eq('WeddingInviteeId', id)
+      .order('Created', { ascending: false })
+      .limit(1);
     if (error) throw error;
     return data;
   }

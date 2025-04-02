@@ -36,7 +36,11 @@ export class StepperComponent {
   selectedInvitee: Invitee | null = null;
   isSubmitting = false;
   isFormsValid = false;
+
   rsvpMehndiDate: string = '';
+  rsvpGrahShantiDate: string = '';
+  rsvpCeremonyDate: string = '';
+  rsvpReceptionDate: string = '';
 
   @ViewChild(SearchNameComponent) searchNameComponent!: SearchNameComponent;
   @ViewChild(EventRsvpComponent) eventRsvpComponent!: EventRsvpComponent;
@@ -58,12 +62,56 @@ export class StepperComponent {
       try {
         // Get which events the invitee is invited to
         const inviteeEvents = await this.supabaseService.getInvitedEvents(name);
+        const inviteeId: number = inviteeEvents[0].Id;
+        const invitedMehndi: boolean = inviteeEvents[0].IsInvitedMehndi;
+        const invitedGrahShanti: boolean = inviteeEvents[0].IsInvitedGrahShanti;
+        const invitedCeremony: boolean = inviteeEvents[0].IsInvitedCeremony;
+        const invitedReception: boolean = inviteeEvents[0].IsInvitedReception;
 
-        const inviteeId = inviteeEvents[0].Id
-        const alreadyRsvpMehndi = await this.supabaseService.getAlreadyMendhRsvp(inviteeId);
-        const date = new Date(alreadyRsvpMehndi[0].Created);
-        this.rsvpMehndiDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-        console.log(this.rsvpMehndiDate);
+        // Check to see if invitee has already RSVP'd and when
+        if (invitedMehndi) {
+          const alreadyRsvpMehndi = await this.supabaseService.getAlreadyMendhiRsvp(inviteeId);
+          if (alreadyRsvpMehndi.length > 0) {
+            const date = new Date(alreadyRsvpMehndi[0].Created);
+            const attending: string = alreadyRsvpMehndi[0].IsAttending ? 'Attending' : 'Not Attending';
+
+            this.rsvpMehndiDate = `RSVP'd to the Mehndi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            console.log(this.rsvpMehndiDate);
+          }
+        }
+
+        if (invitedGrahShanti) {
+          const alreadyRsvpGrahShanti= await this.supabaseService.getAlreadyGrahShantiRsvp(inviteeId);
+          if (alreadyRsvpGrahShanti.length > 0) {
+            const date = new Date(alreadyRsvpGrahShanti[0].Created);
+            const attending: string = alreadyRsvpGrahShanti[0].IsAttending ? 'Attending' : 'Not Attending';
+
+            this.rsvpGrahShantiDate = `RSVP'd to the Pithi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            console.log(this.rsvpGrahShantiDate);
+          }
+        }
+
+        if (invitedCeremony) {
+          const alreadyRsvpCeremony = await this.supabaseService.getAlreadyCeremonyRsvp(inviteeId);
+          if (alreadyRsvpCeremony.length > 0) {
+            const date = new Date(alreadyRsvpCeremony[0].Created);
+            const attending: string = alreadyRsvpCeremony[0].IsAttending ? 'Attending' : 'Not Attending';
+            
+            this.rsvpCeremonyDate = `RSVP'd to the Ceremony on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            console.log(this.rsvpCeremonyDate);
+          }
+        }
+
+        if (invitedReception) {
+          const alreadyRsvpReception = await this.supabaseService.getAlreadyReceptionRsvp(inviteeId);
+          if (alreadyRsvpReception.length > 0) {
+            const date = new Date(alreadyRsvpReception[0].Created);
+            const attending: string = alreadyRsvpReception[0].IsAttending ? 'Attending' : 'Not Attending';
+
+            this.rsvpReceptionDate = `RSVP'd to the Reception on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            console.log(this.rsvpReceptionDate);
+          }
+        }
         
         if (inviteeEvents && inviteeEvents.length > 0) {
           // We're assuming there's only one entry per name
