@@ -5,7 +5,7 @@
     --color-off-brown: #c69971;
     --color-off-white: #e8eae9;
 
-    --font-cursive: "Italianno", "cursive";
+    --font-title: "Charm", "cursive";
 }
 
 html, body { 
@@ -14,7 +14,7 @@ html, body {
 
 body { 
     margin: 0; 
-    font-family: "Italianno", cursive;
+    font-family: "Playfair Display", serif;
     font-weight: 400;
     font-style: normal;
     background-image: url('/bloom.png');
