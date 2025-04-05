@@ -138,34 +138,48 @@ export class StepperComponent {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.eventRsvpComponent || !this.eventRsvpComponent.formsValid) {
       return;
     }
-    
-    this.isSubmitting = true;
+  
+    this.isSubmitting = true; // Set loading state
     const formData = this.eventRsvpComponent.getFormValues();
-    
     console.log('Submitting RSVP data:', formData);
-
-    // if (this.selectedInvitee?.Id) {
-    //   this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.attending, formData.mehndi.numberOfGuests, 
-    //     formData.mehndi.guestsNames);
-
-    //   this.supabaseService.insertGrahShantiRsvp(this.selectedInvitee.Id, formData.grahShanti.attending, formData.grahShanti.numberOfGuests, 
-    //     formData.grahShanti.guestsNames);
-      
-    //   this.supabaseService.insertCeremonyRsvp(this.selectedInvitee.Id, formData.ceremony.attending, formData.ceremony.numberOfGuests, 
-    //     formData.ceremony.guestsNames, formData.ceremony.dietaryRestrictions);
-      
-    //   this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, 
-    //     formData.reception.guestsNames, formData.reception.dietaryRestrictions);
-    // }
-    
-    // Simulate API call
-    setTimeout(() => {
-      this.isSubmitting = false;
-      // Handle success
-    }, 1000);
+  
+    try {
+      if (this.selectedInvitee?.Id) {
+        // Create an array of promises from your Supabase calls
+        const submissionPromises = [
+          this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.attending, formData.mehndi.numberOfGuests, formData.mehndi.guestsNames),
+          this.supabaseService.insertGrahShantiRsvp(this.selectedInvitee.Id, formData.grahShanti.attending, formData.grahShanti.numberOfGuests, formData.grahShanti.guestsNames),
+          this.supabaseService.insertCeremonyRsvp(this.selectedInvitee.Id, formData.ceremony.attending, formData.ceremony.numberOfGuests, formData.ceremony.guestsNames, formData.ceremony.dietaryRestrictions),
+          this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, formData.reception.guestsNames, formData.reception.dietaryRestrictions)
+        ];
+  
+        // Wait for ALL promises to resolve successfully
+        await Promise.all(submissionPromises);
+  
+        // Handle success *after* all calls are complete
+        this.toastr.success("Your RSVP has succefully been submitted!");
+        console.log('All RSVP data submitted successfully!');
+        // Maybe show a success message to the user
+        // Maybe navigate away or reset the form
+  
+      } else {
+        this.toastr.error("Please select a name from the 'Select your Name' section.");
+         console.error("No selected invitee ID found.");
+      }
+  
+    } catch (error) {
+      // Handle any errors that occurred during *any* of the Supabase calls
+      this.toastr.error("Ran into an error submitting your RSVP.");
+      console.error('Error submitting RSVP data:', error);
+      // Show an error message to the user
+  
+    } finally {
+      // This block executes whether the try block succeeded or failed
+      this.isSubmitting = false; // Reset loading state *after* completion or error
+    }
   }
 }
