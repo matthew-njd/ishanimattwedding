@@ -8,6 +8,7 @@ import { SearchNameComponent } from '../search-name/search-name.component';
 import { SupabaseService } from '../_services/supabase.service';
 import { EventRsvpComponent } from '../event-rsvp/event-rsvp.component';
 import { Invitee } from '../_models/types';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stepper',
@@ -20,7 +21,7 @@ import { Invitee } from '../_models/types';
     MatFormFieldModule,
     MatInputModule,
     SearchNameComponent,
-    EventRsvpComponent
+    EventRsvpComponent,
 ],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.css'
@@ -28,6 +29,7 @@ import { Invitee } from '../_models/types';
 export class StepperComponent {
   private supabaseService = inject(SupabaseService);
   private _formBuilder = inject(FormBuilder);
+  private toastr = inject(ToastrService);
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -75,8 +77,8 @@ export class StepperComponent {
             const date = new Date(alreadyRsvpMehndi[0].Created);
             const attending: string = alreadyRsvpMehndi[0].IsAttending ? 'Attending' : 'Not Attending';
 
-            this.rsvpMehndiDate = `RSVP'd to the Mehndi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            console.log(this.rsvpMehndiDate);
+            this.rsvpMehndiDate = `You RSVP'd to the Mehndi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            this.toastr.warning(this.rsvpMehndiDate);
           }
         }
 
@@ -86,8 +88,9 @@ export class StepperComponent {
             const date = new Date(alreadyRsvpGrahShanti[0].Created);
             const attending: string = alreadyRsvpGrahShanti[0].IsAttending ? 'Attending' : 'Not Attending';
 
-            this.rsvpGrahShantiDate = `RSVP'd to the Pithi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            console.log(this.rsvpGrahShantiDate);
+            this.rsvpGrahShantiDate = `You RSVP'd to the Pithi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            this.toastr.warning(this.rsvpGrahShantiDate);
+
           }
         }
 
@@ -97,8 +100,8 @@ export class StepperComponent {
             const date = new Date(alreadyRsvpCeremony[0].Created);
             const attending: string = alreadyRsvpCeremony[0].IsAttending ? 'Attending' : 'Not Attending';
             
-            this.rsvpCeremonyDate = `RSVP'd to the Ceremony on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            console.log(this.rsvpCeremonyDate);
+            this.rsvpCeremonyDate = `You RSVP'd to the Ceremony on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            this.toastr.warning(this.rsvpCeremonyDate);
           }
         }
 
@@ -108,8 +111,8 @@ export class StepperComponent {
             const date = new Date(alreadyRsvpReception[0].Created);
             const attending: string = alreadyRsvpReception[0].IsAttending ? 'Attending' : 'Not Attending';
 
-            this.rsvpReceptionDate = `RSVP'd to the Reception on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            console.log(this.rsvpReceptionDate);
+            this.rsvpReceptionDate = `You RSVP'd to the Reception on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
+            this.toastr.warning(this.rsvpReceptionDate);
           }
         }
         
