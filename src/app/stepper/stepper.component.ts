@@ -78,7 +78,7 @@ export class StepperComponent {
             const attending: string = alreadyRsvpMehndi[0].IsAttending ? 'Attending' : 'Not Attending';
 
             this.rsvpMehndiDate = `You RSVP'd to the Mehndi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            this.toastr.warning(this.rsvpMehndiDate);
+            this.toastr.info(this.rsvpMehndiDate);
           }
         }
 
@@ -89,7 +89,7 @@ export class StepperComponent {
             const attending: string = alreadyRsvpGrahShanti[0].IsAttending ? 'Attending' : 'Not Attending';
 
             this.rsvpGrahShantiDate = `You RSVP'd to the Pithi on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            this.toastr.warning(this.rsvpGrahShantiDate);
+            this.toastr.info(this.rsvpGrahShantiDate);
 
           }
         }
@@ -101,7 +101,7 @@ export class StepperComponent {
             const attending: string = alreadyRsvpCeremony[0].IsAttending ? 'Attending' : 'Not Attending';
             
             this.rsvpCeremonyDate = `You RSVP'd to the Ceremony on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            this.toastr.warning(this.rsvpCeremonyDate);
+            this.toastr.info(this.rsvpCeremonyDate);
           }
         }
 
@@ -112,7 +112,7 @@ export class StepperComponent {
             const attending: string = alreadyRsvpReception[0].IsAttending ? 'Attending' : 'Not Attending';
 
             this.rsvpReceptionDate = `You RSVP'd to the Reception on: ${date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (${attending})`;
-            this.toastr.warning(this.rsvpReceptionDate);
+            this.toastr.info(this.rsvpReceptionDate);
           }
         }
         
