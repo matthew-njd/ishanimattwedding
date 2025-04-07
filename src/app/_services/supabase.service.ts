@@ -10,7 +10,7 @@ export class SupabaseService {
   private supabase: SupabaseClient;
 
   constructor() { 
-    this.supabase = createClient<Database>(environment.apiUrl, environment.apiKey, {
+    this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseKey, {
       auth: {
         persistSession: false,  // Disables session persistence
         autoRefreshToken: false, // Prevents auto-refreshing tokens
