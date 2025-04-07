@@ -1,11 +1,14 @@
-<div class="flex flex-col items-center justify-center mt-10 px-4">
+<div class="flex flex-col min-h-screen">
+  <div class="flex-grow flex flex-col items-center justify-center mt-10 px-4">
     <h1 class="text-6xl md:text-5xl sm:text-4xl xs:text-3xl text-off-green text-center">Ishani and Matthew's Wedding RSVP</h1>
-    <app-stepper class="w-full max-w-[450px] mt-8 mb-8"></app-stepper>
-</div>
+    <div class="w-full max-w-[450px] mt-8 mb-8">
+        <app-stepper></app-stepper>
+    </div>
+  </div>
 
-<div class="flex justify-center absolute bottom-0 w-full py-4 text-off-white bg-off-green">
+  <div class="flex justify-center w-full py-4 text-off-white bg-off-green">
     <h1 class="flex flex-col pl-1 pr-1 sm:flex-row items-center text-center gap-2 sm:gap-1 text-lg sm:text-xl">
-        <span>If you have any issues RSVP'ing, feel free to reach out to Matt at</span> 
+        <span>If you have any issues RSVP'ing, feel free to reach out to Matt at</span>
         <span class="flex items-center gap-1"> <mat-icon aria-hidden="false" aria-label="Email icon" fontIcon="email"></mat-icon>
             <a href="mailto:mnjdagostino@gmail.com" class="underline hover:text-off-brown">mnjdagostino&#64;gmail.com</a>
         </span>
@@ -14,4 +17,5 @@
             <a href="tel:9059609313" class="underline hover:text-off-brown">(905) 960-9313</a>
         </span>
     </h1>
+  </div>
 </div>
