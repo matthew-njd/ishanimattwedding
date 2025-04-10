@@ -10,7 +10,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
     provideToastr({
-      positionClass: 'toast-bottom-right',
       closeButton: true
     }),
     provideAnimations(),
