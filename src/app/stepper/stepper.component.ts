@@ -117,7 +117,6 @@ export class StepperComponent {
         }
         
         if (inviteeEvents && inviteeEvents.length > 0) {
-          // We're assuming there's only one entry per name
           this.selectedInvitee = {
             Id: inviteeEvents[0].Id,
             Name: name,
@@ -145,7 +144,6 @@ export class StepperComponent {
   
     this.isSubmitting = true; // Set loading state
     const formData = this.eventRsvpComponent.getFormValues();
-    console.log('Submitting RSVP data:', formData);
   
     try {
       if (this.selectedInvitee?.Id) {
@@ -157,14 +155,9 @@ export class StepperComponent {
           this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, formData.reception.guestsNames, formData.reception.dietaryRestrictions)
         ];
   
-        // Wait for ALL promises to resolve successfully
         await Promise.all(submissionPromises);
   
-        // Handle success *after* all calls are complete
         this.toastr.success("Your RSVP has succefully been submitted!");
-        console.log('All RSVP data submitted successfully!');
-        // Maybe show a success message to the user
-        // Maybe navigate away or reset the form
   
       } else {
         this.toastr.error("Please select a name from the 'Select your Name' section.");
@@ -172,14 +165,9 @@ export class StepperComponent {
       }
   
     } catch (error) {
-      // Handle any errors that occurred during *any* of the Supabase calls
       this.toastr.error("Ran into an error submitting your RSVP.");
-      console.error('Error submitting RSVP data:', error);
-      // Show an error message to the user
-  
     } finally {
-      // This block executes whether the try block succeeded or failed
-      this.isSubmitting = false; // Reset loading state *after* completion or error
+      this.isSubmitting = false; 
     }
   }
 }
