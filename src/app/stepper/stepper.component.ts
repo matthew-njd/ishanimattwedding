@@ -31,6 +31,7 @@ export class StepperComponent {
   private _formBuilder = inject(FormBuilder);
   private toastr = inject(ToastrService);
 
+  @ViewChild('stepper') stepper: any;
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -38,6 +39,8 @@ export class StepperComponent {
   selectedInvitee: Invitee | null = null;
   isSubmitting = false;
   isFormsValid = false;
+  completed = false;
+  firstStepCompleted = false;
 
   rsvpMehndiDate: string = '';
   rsvpGrahShantiDate: string = '';
@@ -59,6 +62,7 @@ export class StepperComponent {
   
   async onNameSelected(name: string) {
     this.firstFormGroup.get('firstCtrl')?.setValue(name);
+    this.firstStepCompleted = true;
   
     if (name) {
       try {
@@ -158,6 +162,8 @@ export class StepperComponent {
         await Promise.all(submissionPromises);
   
         this.toastr.success("Your RSVP has succefully been submitted!");
+        this.completed = true;
+        this.stepper.next();
   
       } else {
         this.toastr.error("Please select a name from the 'Select your Name' section.");

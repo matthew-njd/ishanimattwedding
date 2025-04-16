@@ -12,6 +12,8 @@
 html, body { 
     height: 100%; 
     margin: 0;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body { 
@@ -22,6 +24,19 @@ body {
     font-weight: 400;
     font-style: normal;
     background-image: url('/bloom.png');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+    
+    .mat-form-field {
+        -webkit-appearance: none;
+    }
 }
 
 @media screen and (max-width: 768px) {
