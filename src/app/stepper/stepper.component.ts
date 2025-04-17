@@ -163,7 +163,9 @@ export class StepperComponent {
   
         this.toastr.success("Your RSVP has succefully been submitted!");
         this.completed = true;
-        this.stepper.next();
+        setTimeout(() => {
+          this.stepper.selectedIndex = 2;
+        }, 0);
   
       } else {
         this.toastr.error("Please select a name from the 'Select your Name' section.");
@@ -173,7 +175,9 @@ export class StepperComponent {
     } catch (error) {
       this.toastr.error("Ran into an error submitting your RSVP.");
     } finally {
-      this.isSubmitting = false; 
+      setTimeout(() => {
+        this.isSubmitting = false; 
+      }, 5000);
     }
   }
 }
