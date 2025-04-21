@@ -68,11 +68,19 @@ export class StepperComponent {
       try {
         // Get which events the invitee is invited to
         const inviteeEvents = await this.supabaseService.getInvitedEvents(name);
-        const inviteeId: number = inviteeEvents[0].Id;
-        const invitedMehndi: boolean = inviteeEvents[0].IsInvitedMehndi;
-        const invitedGrahShanti: boolean = inviteeEvents[0].IsInvitedGrahShanti;
-        const invitedCeremony: boolean = inviteeEvents[0].IsInvitedCeremony;
-        const invitedReception: boolean = inviteeEvents[0].IsInvitedReception;
+        
+        // Check if we have any invitee events
+        if (!inviteeEvents || inviteeEvents.length === 0) {
+          this.selectedInvitee = null;
+          return;
+        }
+
+        const firstInvitee = inviteeEvents[0];
+        const inviteeId: number = firstInvitee.Id;
+        const invitedMehndi: boolean = firstInvitee.IsInvitedMehndi;
+        const invitedGrahShanti: boolean = firstInvitee.IsInvitedGrahShanti;
+        const invitedCeremony: boolean = firstInvitee.IsInvitedCeremony;
+        const invitedReception: boolean = firstInvitee.IsInvitedReception;
 
         // Check to see if invitee has already RSVP'd and when
         if (invitedMehndi) {
@@ -152,16 +160,58 @@ export class StepperComponent {
     try {
       if (this.selectedInvitee?.Id) {
         // Create an array of promises from your Supabase calls
-        const submissionPromises = [
-          this.supabaseService.insertMendhiRsvp(this.selectedInvitee.Id, formData.mehndi.attending, formData.mehndi.numberOfGuests, formData.mehndi.guestsNames),
-          this.supabaseService.insertGrahShantiRsvp(this.selectedInvitee.Id, formData.grahShanti.attending, formData.grahShanti.numberOfGuests, formData.grahShanti.guestsNames),
-          this.supabaseService.insertCeremonyRsvp(this.selectedInvitee.Id, formData.ceremony.attending, formData.ceremony.numberOfGuests, formData.ceremony.guestsNames, formData.ceremony.dietaryRestrictions),
-          this.supabaseService.insertReceptionRsvp(this.selectedInvitee.Id, formData.reception.attending, formData.reception.numberOfGuests, formData.reception.guestsNames, formData.reception.dietaryRestrictions)
-        ];
+        const submissionPromises = [];
+
+        // Only add promises for events the invitee is invited to
+        if (formData.mehndi) {
+          submissionPromises.push(
+            this.supabaseService.insertMendhiRsvp(
+              this.selectedInvitee.Id,
+              formData.mehndi.attending,
+              formData.mehndi.numberOfGuests,
+              formData.mehndi.guestsNames
+            )
+          );
+        }
+
+        if (formData.grahShanti) {
+          submissionPromises.push(
+            this.supabaseService.insertGrahShantiRsvp(
+              this.selectedInvitee.Id,
+              formData.grahShanti.attending,
+              formData.grahShanti.numberOfGuests,
+              formData.grahShanti.guestsNames
+            )
+          );
+        }
+
+        if (formData.ceremony) {
+          submissionPromises.push(
+            this.supabaseService.insertCeremonyRsvp(
+              this.selectedInvitee.Id,
+              formData.ceremony.attending,
+              formData.ceremony.numberOfGuests,
+              formData.ceremony.guestsNames,
+              formData.ceremony.dietaryRestrictions
+            )
+          );
+        }
+
+        if (formData.reception) {
+          submissionPromises.push(
+            this.supabaseService.insertReceptionRsvp(
+              this.selectedInvitee.Id,
+              formData.reception.attending,
+              formData.reception.numberOfGuests,
+              formData.reception.guestsNames,
+              formData.reception.dietaryRestrictions
+            )
+          );
+        }
   
         await Promise.all(submissionPromises);
   
-        this.toastr.success("Your RSVP has succefully been submitted!");
+        this.toastr.success("Your RSVP has successfully been submitted!");
         this.completed = true;
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
@@ -169,11 +219,12 @@ export class StepperComponent {
   
       } else {
         this.toastr.error("Please select a name from the 'Select your Name' section.");
-         console.error("No selected invitee ID found.");
+        console.error("No selected invitee ID found.");
       }
   
     } catch (error) {
       this.toastr.error("Ran into an error submitting your RSVP.");
+      console.log(error);
     } finally {
       setTimeout(() => {
         this.isSubmitting = false; 
