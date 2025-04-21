@@ -137,34 +137,21 @@ export class EventRsvpComponent implements OnChanges {
   
   // Get all form values for submission
   getFormValues() {
-    const sanitizeForm = (form: any, isAttending: boolean) => {
-      if (!isAttending) {
-        // When not attending, ensure consistent values
-        return {
-          attending: false,
-          numberOfGuests: 0,
-          guestsNames: '',
-          dietaryRestrictions: ''
-        };
-      }
-      return form;
-    };
-  
     const mehndiData = this.selectedInvitee?.IsInvitedMehndi 
-      ? sanitizeForm(this.mehndiForm.value, this.mehndiForm.value.attending) 
-      : null;
+      ? this.mehndiForm.value 
+      : { attending: false, numberOfGuests: 0, guestsNames: '' };
       
     const grahShantiData = this.selectedInvitee?.IsInvitedGrahShanti 
-      ? sanitizeForm(this.grahShantiForm.value, this.grahShantiForm.value.attending) 
-      : null;
+      ? this.grahShantiForm.value 
+      : { attending: false, numberOfGuests: 0, guestsNames: '' };
       
     const ceremonyData = this.selectedInvitee?.IsInvitedCeremony 
-      ? sanitizeForm(this.ceremonyForm.value, this.ceremonyForm.value.attending) 
-      : null;
+      ? this.ceremonyForm.value 
+      : { attending: false, numberOfGuests: 0, guestsNames: '', dietaryRestrictions: '' };
       
     const receptionData = this.selectedInvitee?.IsInvitedReception 
-      ? sanitizeForm(this.receptionForm.value, this.receptionForm.value.attending) 
-      : null;
+      ? this.receptionForm.value 
+      : { attending: false, numberOfGuests: 0, guestsNames: '', dietaryRestrictions: '' };
   
     return {
       id: this.selectedInvitee?.Id,

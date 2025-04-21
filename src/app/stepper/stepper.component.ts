@@ -160,54 +160,34 @@ export class StepperComponent {
     try {
       if (this.selectedInvitee?.Id) {
         // Create an array of promises from your Supabase calls
-        const submissionPromises = [];
-
-        // Only add promises for events the invitee is invited to
-        if (formData.mehndi) {
-          submissionPromises.push(
-            this.supabaseService.insertMendhiRsvp(
-              this.selectedInvitee.Id,
-              formData.mehndi.attending,
-              formData.mehndi.numberOfGuests,
-              formData.mehndi.guestsNames
-            )
-          );
-        }
-
-        if (formData.grahShanti) {
-          submissionPromises.push(
-            this.supabaseService.insertGrahShantiRsvp(
-              this.selectedInvitee.Id,
-              formData.grahShanti.attending,
-              formData.grahShanti.numberOfGuests,
-              formData.grahShanti.guestsNames
-            )
-          );
-        }
-
-        if (formData.ceremony) {
-          submissionPromises.push(
-            this.supabaseService.insertCeremonyRsvp(
-              this.selectedInvitee.Id,
-              formData.ceremony.attending,
-              formData.ceremony.numberOfGuests,
-              formData.ceremony.guestsNames,
-              formData.ceremony.dietaryRestrictions
-            )
-          );
-        }
-
-        if (formData.reception) {
-          submissionPromises.push(
-            this.supabaseService.insertReceptionRsvp(
-              this.selectedInvitee.Id,
-              formData.reception.attending,
-              formData.reception.numberOfGuests,
-              formData.reception.guestsNames,
-              formData.reception.dietaryRestrictions
-            )
-          );
-        }
+        const submissionPromises = [
+          this.supabaseService.insertMendhiRsvp(
+            this.selectedInvitee.Id,
+            formData.mehndi.attending,
+            formData.mehndi.numberOfGuests,
+            formData.mehndi.guestsNames
+          ),
+          this.supabaseService.insertGrahShantiRsvp(
+            this.selectedInvitee.Id,
+            formData.grahShanti.attending,
+            formData.grahShanti.numberOfGuests,
+            formData.grahShanti.guestsNames
+          ),
+          this.supabaseService.insertCeremonyRsvp(
+            this.selectedInvitee.Id,
+            formData.ceremony.attending,
+            formData.ceremony.numberOfGuests,
+            formData.ceremony.guestsNames,
+            formData.ceremony.dietaryRestrictions
+          ),
+          this.supabaseService.insertReceptionRsvp(
+            this.selectedInvitee.Id,
+            formData.reception.attending,
+            formData.reception.numberOfGuests,
+            formData.reception.guestsNames,
+            formData.reception.dietaryRestrictions
+          )
+        ];
   
         await Promise.all(submissionPromises);
   
