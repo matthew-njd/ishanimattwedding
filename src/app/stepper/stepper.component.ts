@@ -75,14 +75,14 @@ export class StepperComponent {
           return;
         }
 
-        const firstInvitee = inviteeEvents[0];
-        const inviteeId: number = firstInvitee.Id;
-        const invitedMehndi: boolean = firstInvitee.IsInvitedMehndi;
-        const invitedGrahShanti: boolean = firstInvitee.IsInvitedGrahShanti;
-        const invitedCeremony: boolean = firstInvitee.IsInvitedCeremony;
-        const invitedReception: boolean = firstInvitee.IsInvitedReception;
+        const invitee = inviteeEvents[0];
+        const inviteeId: number = invitee.Id;
+        const invitedMehndi: boolean = invitee.IsInvitedMehndi;
+        const invitedGrahShanti: boolean = invitee.IsInvitedGrahShanti;
+        const invitedCeremony: boolean = invitee.IsInvitedCeremony;
+        const invitedReception: boolean = invitee.IsInvitedReception;
 
-        // Check to see if invitee has already RSVP'd and when
+        // Check to see if invitee was invited to an event, if so show toastr of when they RSVP'd
         if (invitedMehndi) {
           const alreadyRsvpMehndi = await this.supabaseService.getAlreadyMendhiRsvp(inviteeId);
           if (alreadyRsvpMehndi.length > 0) {
